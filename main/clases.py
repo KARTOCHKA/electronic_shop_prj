@@ -5,15 +5,14 @@ class Item:
     all = []
     pay_rate = 1
 
-    def __init__(self, name, price, ammount, sims=None):
+    def __init__(self, name, price, ammount):
         self.__name = name
         self.price = price
         self.ammount = ammount
         self.all.append(self)
-        self.number_of_sim = sims
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{self.__name}', '{self.price}', {self.ammount})"
+        return f"{self.__class__.__name__}({self.__name}, {self.price}, {self.ammount})"
 
     def __str__(self):
         return self.__name
@@ -26,7 +25,7 @@ class Item:
         return self.price * self.ammount
 
     def apply_discount(self):
-        self.price = self.price * self.pay_rate
+        return self.price * self.pay_rate
 
     @staticmethod
     def is_integer(num) -> bool:
@@ -51,17 +50,31 @@ class Item:
         else:
             raise Exception("Длина наименования товара превышает 10 символов.")
 
-
-class Phone(Item):
-
-    def __gt__(self, other):
+    def __add__(self, other) -> int:
+        """Складывает экземпляры класса Phone и Item по количеству товара"""
         if isinstance(other, Item):
             return self.ammount + other.ammount
 
-    @number_of_sims.setter
-    def number_of_sims(self, sims):
-        """Проверяет длинну наименования товара"""
-        if sims > 0 and sims is not float:
-            self.number_of_sim = sims
+
+class Phone(Item):
+
+    def __init__(self, name, price, ammount, sims):
+        super().__init__(name, price, ammount)
+        self.__number_of_sims = sims
+
+    @property
+    def number_of_sim(self) -> int:
+        """Возвращает количество SIM"""
+        return self.__number_of_sims
+
+    @number_of_sim.setter
+    def number_of_sim(self, number_of_sims):
+        """Проверяет количество SIM-карт"""
+        if number_of_sims > 0 and number_of_sims is not float:
+            self.__number_of_sims = number_of_sims
         else:
             raise ValueError("Количество физических SIM-карт должно быть целым числом больше нуля.")
+
+    def __repr__(self) -> str:
+        """Возвращает представление объекта"""
+        return f'{self.__class__.__name__}({self.name}, {self.price}, {self.ammount}, {self.__number_of_sims})'
