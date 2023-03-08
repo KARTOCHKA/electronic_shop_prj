@@ -78,3 +78,27 @@ class Phone(Item):
     def __repr__(self) -> str:
         """Возвращает представление объекта"""
         return f'{self.__class__.__name__}({self.name}, {self.price}, {self.ammount}, {self.__number_of_sims})'
+
+
+class MixinLog:
+    """Класс-миксин с дополнительным функционалом по хранению и изменению раскладки клавиатуры"""
+
+    def __init__(self, *args, **kwargs):
+        self.__language = 'EN'
+        super().__init__(*args, **kwargs)
+
+    @property
+    def language(self) -> str:
+        """Возвращает язык клавиатуры"""
+        return self.__language
+
+    def change_lang(self):
+        """Изменяет язык клавиатуры"""
+        if self.__language == 'EN':
+            self.__language = 'RU'
+        else:
+            self.__language = 'EN'
+
+
+class KeyBoard(MixinLog, Item):
+    """Класс для товара 'клавиатура' """
