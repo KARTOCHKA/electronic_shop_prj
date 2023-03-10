@@ -20,7 +20,7 @@ def key_board():
 def test_class_mix_init(key_board):
     assert key_board.name == 'Dark Project KD87A'
     assert key_board.price == 9600
-    assert key_board.amount == 5
+    assert key_board.ammount == 5
 
 
 def test_class_mix_language(key_board):
@@ -32,7 +32,7 @@ def test_class_mix_change_lang(key_board):
     assert key_board.language == 'RU'
 
 
-def test_electronic_store_init(item):
+def test_item_init(item):
     assert item.name == "Смартфон"
     assert item.price == 10000
     assert item.ammount == 20
